@@ -1,4 +1,6 @@
+G_CROSS_NAME=x86_64-linux-musl
 G_CROSS_NAME=riscv64-linux-musl
+G_CROSS_NAME=aarch64-linux-musl
 
 VAR_CROSS_COMPILE=${G_CROSS_NAME}-
 

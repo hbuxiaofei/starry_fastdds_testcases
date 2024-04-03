@@ -2,6 +2,8 @@ TARGET := eventfd-test
 
 DIRS = .
 
+CFLAGES = -pthread
+
 FILES = $(foreach dir, $(DIRS), $(wildcard $(dir)/*.c))
 
 OBJS = $(patsubst %.c,%.o, $(FILES))
