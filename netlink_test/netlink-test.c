@@ -12,7 +12,8 @@
 
 #define USE_IOV 0
 
-struct sockaddr_nl src_addr, dest_addr;
+struct sockaddr_nl dest_addr;
+// struct sockaddr_nl src_addr;
 struct nlmsghdr *nlh = NULL;
 struct iovec iov;
 int sock_fd;
@@ -129,11 +130,11 @@ int main() {
         return -1;
     }
 
-    memset(&src_addr, 0, sizeof(src_addr));
-    src_addr.nl_family = AF_NETLINK;
-    src_addr.nl_pid = getpid();
-    src_addr.nl_groups = RTNLGRP_NONE;  // 0
-    bind(sock_fd, (struct sockaddr*)&src_addr, sizeof(src_addr));
+    // memset(&src_addr, 0, sizeof(src_addr));
+    // src_addr.nl_family = AF_NETLINK;
+    // src_addr.nl_pid = getpid();
+    // src_addr.nl_groups = RTNLGRP_NONE;  // 0
+    // bind(sock_fd, (struct sockaddr*)&src_addr, sizeof(src_addr));
 
 
     send_request(sock_fd);
