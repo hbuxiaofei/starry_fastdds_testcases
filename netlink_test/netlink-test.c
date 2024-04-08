@@ -89,7 +89,7 @@ void send_request(int sock_fd) {
     nlh = (struct nlmsghdr *)malloc(NLMSG_SPACE(MAX_PAYLOAD));
     memset(nlh, 0, NLMSG_SPACE(MAX_PAYLOAD));
     nlh->nlmsg_len = NLMSG_SPACE(MAX_PAYLOAD);
-    nlh->nlmsg_pid = getpid();
+    /* nlh->nlmsg_pid = getpid(); */
     nlh->nlmsg_flags = NLM_F_REQUEST | NLM_F_DUMP;
     nlh->nlmsg_type = RTM_GETLINK;
     /* nlh->nlmsg_seq = 1; */
