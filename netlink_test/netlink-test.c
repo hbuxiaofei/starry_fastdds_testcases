@@ -68,16 +68,21 @@ void read_response(int sock_fd) {
 #else
         int read_bytes = recvfrom(sock_fd, buffer, sizeof(buffer), 0, NULL, NULL);
 #endif
-        for (struct nlmsghdr *nlhdr = (struct nlmsghdr *)buffer; NLMSG_OK(nlhdr, read_bytes); nlhdr = NLMSG_NEXT(nlhdr, read_bytes)) {
+        if (read_bytes == 0) {
+            break;
+        }
+
+        for (struct nlmsghdr *nlhdr = (struct nlmsghdr *)buffer; NLMSG_OK(nlhdr, read_bytes);
+                nlhdr = NLMSG_NEXT(nlhdr, read_bytes)) {
             if (nlhdr->nlmsg_type == NLMSG_DONE) {
                 done = true;
                 break;
             } else if (nlhdr->nlmsg_type == RTM_NEWLINK) {
-                printf("RTM_NEWLINK(%d) message\n", nlhdr->nlmsg_type);
+                printf("message RTM_NEWLINK(%d) len:%d\n", nlhdr->nlmsg_type, nlhdr->nlmsg_len);
             } else if (nlhdr->nlmsg_type == RTM_NEWADDR) {
-                printf("RTM_NEWADDR(%d) message\n", nlhdr->nlmsg_type);
+                printf("message RTM_NEWADDR(%d) len:%d\n", nlhdr->nlmsg_type, nlhdr->nlmsg_len);
             } else {
-                printf("other type(%d) message\n", nlhdr->nlmsg_type);
+                printf("message other type(%d) len:%d\n", nlhdr->nlmsg_type, nlhdr->nlmsg_len);
             }
             print_link_info(nlhdr);
         }
