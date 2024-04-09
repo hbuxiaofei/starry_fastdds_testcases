@@ -7,6 +7,7 @@
 #include <sys/socket.h>
 #include <linux/netlink.h>
 #include <linux/rtnetlink.h>
+#include <arpa/inet.h>
 
 #define MAX_PAYLOAD 1024
 
@@ -49,6 +50,11 @@ void print_link_info(struct nlmsghdr *nlhdr) {
                mac[3],
                mac[4],
                mac[5]);
+    }
+    if (tb[IFLA_STATS]) {
+        struct rtnl_link_stats *stats = (struct rtnl_link_stats *) RTA_DATA(tb[IFLA_STATS]);
+        printf("\tRX packets %llu bytes %llu\n", stats->rx_packets, stats->rx_bytes  );
+        printf("\tTX packets %llu bytes %llu\n", stats->tx_packets, stats->tx_bytes);
     }
 
 }
